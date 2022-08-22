@@ -22,13 +22,18 @@ class CDCEmulator
 {
 protected:
     CanIfaceManager& _mIfaceManager;
+    CanIfaceObserver _mNodeReqObserver;
+    CanIfaceObserver _mCDCCommandObserver;
+    std::atomic<bool> _mShutdown;
+    std::atomic<bool> _mCDCActive;
+    std::condition_variable _mStatusCV;
+    std::mutex _mMutex;
     std::thread _mStatusThread;
     std::thread _mNodeResponseThread;
-    std::atomic<bool> _mShutdown;
-    CanIfaceObserver _mNodeReqObserver;
-    std::atomic<bool> _mActive;
+    std::thread _mCDCCommandThread;
     void _mStatusFunc();
     void _mNodeResponseFunc();
+    void _mCDCCommandFunc();
 public:
     CDCEmulator( CanIfaceManager& _aIfaceManager );
     ~CDCEmulator();

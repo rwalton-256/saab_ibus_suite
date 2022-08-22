@@ -19,6 +19,7 @@ int main( int argc, char** argv )
 
     saab::status::SaabTracker saab_tracker( can_iface_manager );
 
+#if 0
     saab::status::StatusFlagObserver clr_rise_observer( saab_tracker.sid_buttons().clear(), saab::status::FlagState_Rising );
     saab::status::StatusFlagObserver clr_fall_observer( saab_tracker.sid_buttons().clear(), saab::status::FlagState_Falling );
     saab::status::StatusFlagObserver clk_minus_rise_observer( saab_tracker.sid_buttons().clk_minus(), saab::status::FlagState_Rising );
@@ -146,6 +147,123 @@ int main( int argc, char** argv )
             std::cout << "Up falling edge!" << std::endl;
         }
     } );
+
+    saab::status::StatusFlagObserver next_rise_observer( saab_tracker.steering_wheel_buttons().next(), saab::status::FlagState_Rising );
+    saab::status::StatusFlagObserver next_fall_observer( saab_tracker.steering_wheel_buttons().next(), saab::status::FlagState_Falling );
+    saab::status::StatusFlagObserver seek_minus_rise_observer( saab_tracker.steering_wheel_buttons().seek_minus(), saab::status::FlagState_Rising );
+    saab::status::StatusFlagObserver seek_minus_fall_observer( saab_tracker.steering_wheel_buttons().seek_minus(), saab::status::FlagState_Falling );
+    saab::status::StatusFlagObserver seek_plus_rise_observer( saab_tracker.steering_wheel_buttons().seek_plus(), saab::status::FlagState_Rising );
+    saab::status::StatusFlagObserver seek_plus_fall_observer( saab_tracker.steering_wheel_buttons().seek_plus(), saab::status::FlagState_Falling );
+    saab::status::StatusFlagObserver source_rise_observer( saab_tracker.steering_wheel_buttons().source(), saab::status::FlagState_Rising );
+    saab::status::StatusFlagObserver source_fall_observer( saab_tracker.steering_wheel_buttons().source(), saab::status::FlagState_Falling );
+    saab::status::StatusFlagObserver vol_minus_rise_observer( saab_tracker.steering_wheel_buttons().vol_minus(), saab::status::FlagState_Rising );
+    saab::status::StatusFlagObserver vol_minus_fall_observer( saab_tracker.steering_wheel_buttons().vol_minus(), saab::status::FlagState_Falling );
+    saab::status::StatusFlagObserver vol_plus_rise_observer( saab_tracker.steering_wheel_buttons().vol_plus(), saab::status::FlagState_Rising );
+    saab::status::StatusFlagObserver vol_plus_fall_observer( saab_tracker.steering_wheel_buttons().vol_plus(), saab::status::FlagState_Falling );
+
+    std::thread next_rise_thread( [&]()
+    {
+        while(1)
+        {
+            next_rise_observer.wait();
+            std::cout << "Next rising edge!" << std::endl;
+        }
+    } );
+    std::thread next_fall_thread( [&]()
+    {
+        while(1)
+        {
+            next_fall_observer.wait();
+            std::cout << "Next falling edge!" << std::endl;
+        }
+    } );
+
+    std::thread seek_minus_rise_thread( [&]()
+    {
+        while(1)
+        {
+            seek_minus_rise_observer.wait();
+            std::cout << "Seek Minus rising edge!" << std::endl;
+        }
+    } );
+    std::thread seek_minus_fall_thread( [&]()
+    {
+        while(1)
+        {
+            seek_minus_fall_observer.wait();
+            std::cout << "Seek Minus falling edge!" << std::endl;
+        }
+    } );
+
+    std::thread seek_plus_rise_thread( [&]()
+    {
+        while(1)
+        {
+            seek_plus_rise_observer.wait();
+            std::cout << "Seek Plus rising edge!" << std::endl;
+        }
+    } );
+    std::thread seek_plus_fall_thread( [&]()
+    {
+        while(1)
+        {
+            seek_plus_fall_observer.wait();
+            std::cout << "Seek Plus falling edge!" << std::endl;
+        }
+    } );
+
+    std::thread source_rise_thread( [&]()
+    {
+        while(1)
+        {
+            source_rise_observer.wait();
+            std::cout << "Source rising edge!" << std::endl;
+        }
+    } );
+    std::thread source_fall_thread( [&]()
+    {
+        while(1)
+        {
+            source_fall_observer.wait();
+            std::cout << "Source falling edge!" << std::endl;
+        }
+    } );
+
+    std::thread vol_minus_rise_thread( [&]()
+    {
+        while(1)
+        {
+            vol_minus_rise_observer.wait();
+            std::cout << "Vol Minus rising edge!" << std::endl;
+        }
+    } );
+    std::thread vol_minus_fall_thread( [&]()
+    {
+        while(1)
+        {
+            vol_minus_fall_observer.wait();
+            std::cout << "Vol Minus falling edge!" << std::endl;
+        }
+    } );
+
+    std::thread vol_plus_rise_thread( [&]()
+    {
+        while(1)
+        {
+            vol_plus_rise_observer.wait();
+            std::cout << "Vol Plus rising edge!" << std::endl;
+        }
+    } );
+    std::thread vol_plus_fall_thread( [&]()
+    {
+        while(1)
+        {
+            vol_plus_fall_observer.wait();
+            std::cout << "Vol Plus falling edge!" << std::endl;
+        }
+    } );
+
+#endif
 
     saab::cdc::CDCEmulator cdc_emulator( can_iface_manager );
 

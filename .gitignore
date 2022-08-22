@@ -2,6 +2,7 @@
 **/CMakeFiles
 **/Makefile
 **/build
+**/.vscode
 cmake_install.cmake
 *.a
-sid_canutils_test
+saab_instrument_buf_iface_test
